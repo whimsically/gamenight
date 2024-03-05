@@ -32,6 +32,10 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    setUserUnavailableDays(username: String!, unavailableDays: [String!]!): User
+    createGroup(groupName: String!, groupCreator: String!): Group
+    addGroupMember(groupId: ID!, username: String!): Group
+
   }
    `;
 
