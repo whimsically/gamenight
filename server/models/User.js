@@ -24,7 +24,7 @@ const userSchema = new Schema({
     type: String
   },
   availability: {
-    type: String
+    type: [String]
   },
   groups: [Group.schema],
 });
