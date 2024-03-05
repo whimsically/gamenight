@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Group = require('./Group');
 
 const userSchema = new Schema({
   username: {
@@ -13,6 +12,7 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
     unique: true,
   },
   password: {
@@ -23,10 +23,16 @@ const userSchema = new Schema({
   profilePic: {
     type: String
   },
-  availability: {
-    type: [String]
+  unavailableDays: {
+    type: [String],
+    enum: {
+      values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], message: 'Days of the week only!' 
+    }
   },
-  groups: [Group.schema],
+  groups: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Group'
+},
 });
 
 // Set up pre-save middleware to create password
