@@ -3,7 +3,7 @@ import Profile  from './pages/Profile';
 import Chats from './pages/Chats';
 import Players from './pages/Players';
 import Games from './pages/Games';
-import Calender from './pages/Calender';
+import Scheduler from './pages/Scheduler';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
           <Route path="/Chats" element={<Chats />} />
           <Route path="/Players" element={<Players />} />
           <Route path="/Games" element={<Games />} />
-          <Route path="/Calender" element={<Calender />} />
+          <Route path="/Scheduler" element={<Scheduler />} />
         </Routes>
       </div>
       <Footer />
