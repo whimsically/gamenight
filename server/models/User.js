@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Group = require('./Group');
 
 const userSchema = new Schema({
   username: {
@@ -24,10 +23,13 @@ const userSchema = new Schema({
   profilePic: {
     type: String
   },
-  availability: {
-    type: [String]
+  unavailableDays: {
+    type: [String],
+    enum: {
+      values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], message: 'Days of the week only!' 
+    }
   },
-  groupMembers: {
+  groups: {
     type: [Schema.Types.ObjectId],
     ref: 'Group'
 },

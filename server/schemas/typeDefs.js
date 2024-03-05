@@ -5,7 +5,7 @@ const typeDefs = `
     email: String
     password: String
     profilePic: String
-    availability: [String]
+    unavailableDays: [String]
   }
 
   type Group {
@@ -30,12 +30,9 @@ const typeDefs = `
   }
 
   type Mutation {
-    // addUser(username: String!, email: String!, password: String!): Auth
-    // login(email: String!, password: String!): Auth
-    // addThought(thoughtText: String!): Thought
-    // addComment(thoughtId: ID!, commentText: String!): Thought
-    // removeThought(thoughtId: ID!): Thought
-    // removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
   }
+   `;
 
-  `;
+   module.exports = typeDefs
