@@ -12,9 +12,10 @@ const groupSchema = new Schema({
         type: String,
         required: true
     },
-    // groupEvents: {
-
-    // }
+    groupMembers: {
+        type: [Schema.Types.ObjectId],
+        ref: 'User'
+    }
 });
 
 const Group = mongoose.model('Group', groupSchema);
