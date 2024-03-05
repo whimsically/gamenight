@@ -13,6 +13,7 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
+    match: [/.+@.+\..+/, 'Must match an email address!'],
     unique: true,
   },
   password: {
@@ -26,7 +27,10 @@ const userSchema = new Schema({
   availability: {
     type: [String]
   },
-  groups: [Group.schema],
+  groupMembers: {
+    type: [Schema.Types.ObjectId],
+    ref: 'Group'
+},
 });
 
 // Set up pre-save middleware to create password

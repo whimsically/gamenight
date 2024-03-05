@@ -15,6 +15,9 @@ const groupSchema = new Schema({
     groupMembers: {
         type: [Schema.Types.ObjectId],
         ref: 'User'
+    },
+    groupPicture: {
+        type: String
     }
 });
 
