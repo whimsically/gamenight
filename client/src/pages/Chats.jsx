@@ -1,4 +1,3 @@
-// import './index.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +12,19 @@ const Chat = ({ username, setUsername, room, setRoom, socket }) => {
     };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formContainer}>
-        <h1>{`<>DevRooms</>`}</h1>
-        <input className={styles.input} placeholder='Username...'
-        onChange={(e) => setUsername(e.target.value)} />
+    <div>
+      <div>
+        <h1>{`Chat`}</h1>
+        <input
+          className="input"
+          placeholder='Username...'
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-        <select className={styles.input}
-        onChange={(e) => setRoom(e.target.value)}>
+        <select
+          className="select"
+          onChange={(e) => setRoom(e.target.value)}
+        >
           <option>-- Select Room --</option>
           <option value='javascript'>JavaScript</option>
           <option value='node'>Node</option>
@@ -28,7 +32,7 @@ const Chat = ({ username, setUsername, room, setRoom, socket }) => {
           <option value='react'>React</option>
         </select>
         
-        <button className={styles.button} onClick={joinRoom}>Join Room</button>
+        <button className="button" onClick={joinRoom}>Join Room</button>
       </div>
     </div>
   );
