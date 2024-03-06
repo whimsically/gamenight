@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import { Layout } from 'antd';
+import { Button, Layout, theme } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import Logo from './components/Logo';
 import MenuList from './components/MenuList';
 import Chat from './pages/Chats';
@@ -10,9 +11,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 const { Sider, Content } = Layout;
 
 function App() {
+
   const [username, setUsername] = useState('');
   const [room, setRoom] = useState('');
   const [socket, setSocket] = useState(null);
+  const [darkTheme, setDarkTheme] = useState (true);
+  const [collapsed, setCollapsed] = useState (false);
+
 
   useEffect(() => {
     // Connect to the socket when the component mounts
@@ -25,11 +30,27 @@ function App() {
     };
   }, []);
 
+  const {
+    token: {colorBgContainer},
+  } = theme.useToken();
+
+  const toggleTheme = () => {
+    setDarkTheme(!darkTheme);
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider width={300} className="sidebar">
+      <Sider collapsed={collapsed}
+      collapsible
+      trigger={null}
+      theme={darkTheme? 'dark' : 'light'} 
+      width={400} 
+      className="sidebar"
+      >
         <Logo />
-        <MenuList />
+        <MenuList darkTheme={darkTheme}/>
+        <ToggleThemeButton darkTheme={darkTheme} 
+        toggleTheme={toggleTheme} />
       </Sider>
       <Layout>
         <Content>
