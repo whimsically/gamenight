@@ -48,13 +48,14 @@
 }
 
 .logo-icon {
-  width: 40px;
-  height: 40px;
+  width: 100px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
   border-radius: 50%;
+  margin: 30px;
   background: rgba(130, 72, 197, 0.88);
 }
 
