@@ -1,44 +1,22 @@
-import { useLocation, useOutlet, } from 'react-router-dom';
-import { routes } from './routes.jsx'
+// import { useState } from 'react';
+import { Layout } from 'antd';
+import Logo from './components/Logo';
+import MenuList from './components/MenuList';
 
-//components
-import Header from './components/Navigation/Header.jsx'
-import Footer from './components/Footer'
-import Navbar from './components/Navigation/Navigation.jsx';
 
-//styling
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import './App.css'
+const { Sider } = Layout;
 
 function App() {
-  const location = useLocation()
-  const currentOutlet = useOutlet()
-  const { nodeRef } =
-    routes.find((route) => route.path === location.pathname) ?? {}
   return (
     <>
-      <Header />
-      <main>
-      <Navbar />
-        <SwitchTransition>
-          <CSSTransition
-            key={location.pathname}
-            nodeRef={nodeRef}
-            timeout={300}
-            classNames="page"
-            unmountOnExit
-          >
-            {(state) => (
-              <div ref={nodeRef} className="page">
-                {currentOutlet}
-              </div>
-            )}
-          </CSSTransition>
-        </SwitchTransition>
-      </main>
-      <Footer />
+      <Layout>
+      <Sider width={300} className="sidebar">
+        <Logo />
+        <MenuList />
+    </Sider>
+    </Layout>
     </>
-  )
+  );
 }
 
 export default App;
