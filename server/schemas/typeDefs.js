@@ -14,11 +14,18 @@ const typeDefs = `
     groupName: String
     groupMembers: [String]
     groupPicture: String
+    groupChat: [Message]
   }
   
   type Auth {
     token: ID!
     profile: User
+  }
+
+  type Message {
+    _id: ID!
+    from: String!
+    content: String!
   }
 
   type Query {
@@ -44,6 +51,8 @@ const typeDefs = `
     setUserUnavailableDays(username: String!, unavailableDays: [String!]): User
     updateUserUnavailableDays(): User
     deleteUserUnavailableDays(userId: ID!): User
+
+    sendMessage(from: String! content: String! toGroup: ID!): Message!
 
   }
    `;

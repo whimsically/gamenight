@@ -1,4 +1,4 @@
-const {User, Group} = require('../models');
+const {User, Group } = require('../models');
 const {signToken, AuthenticationError} = require('../utils/auth');
 
 const resolvers = {
@@ -59,7 +59,23 @@ const resolvers = {
             return { token, user };
           },
 
-          
+          sendMessage: async (parent, args, { user }) => {
+            try {
+                if (!user) throw new AuthenticationError('Not logged in')
+                
+                const messages = await Group.findOneAndUpdate(
+                    {_id: args.toGroup},
+                    { $addToSet: { groupChat: { from: args.from, content: args.content } } },
+                    { new: true }
+                    );
+
+            return messages
+
+            } catch(err) {
+                console.log(err)
+                throw err
+            }
+          }
     }
 
 
