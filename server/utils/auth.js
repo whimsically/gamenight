@@ -23,8 +23,8 @@ module.exports = {
         }
     
         try {
-          const { authenticatedPerson } = jwt.verify(token, secret, { maxAge: expiration });
-          req.user = authenticatedPerson;
+          const { data } = jwt.verify(token, secret, { maxAge: expiration });
+          req.user = data;
         } catch {
           console.log('Invalid token');
         }

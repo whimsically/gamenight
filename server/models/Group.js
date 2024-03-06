@@ -18,7 +18,8 @@ const groupSchema = new Schema({
     },
     groupPicture: {
         type: String
-    }
+    },
+    groupChat: [messageSchema]
 });
 
 const Group = mongoose.model('Group', groupSchema);
