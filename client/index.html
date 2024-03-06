@@ -9,11 +9,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div>
+    <div class="wave-container">
       <div class="wave"></div>
       <div class="wave"></div>
       <div class="wave"></div>
-   </div>
+    </div>
+     <!-- Button to change theme -->
+  <button class="theme-button" onclick="changeTheme()">Change Theme</button>
+  <script>
+    function changeTheme() {
+      document.documentElement.style.setProperty('--background', 'var(--ocean)');
+    }
+  </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
