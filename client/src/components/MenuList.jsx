@@ -8,9 +8,9 @@ import {
     SettingOutlined 
 } from '@ant-design/icons';
 
-const MenuList = () => {
+const MenuList = ({ darkTheme }) => {
     return (
-        <Menu theme="dark" mode="inline" className="menu-bar">
+        <Menu theme={darkTheme ? 'dark' : 'light'} mode="inline" className="menu-bar">
             <Menu.Item key="home" icon={<HomeOutlined />}>
                 Home
             </Menu.Item>
