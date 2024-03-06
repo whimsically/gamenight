@@ -25,7 +25,7 @@
 }
 
 * {
-  margin: 0;
+  margin: 25px;
   padding: 0;
   border: none;
   outline: none;
@@ -61,7 +61,7 @@
 }
 
 .menu-bar {
-  height: 90vh;
+  height: 50vh;
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
