@@ -8,7 +8,7 @@ import './index.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const { Sider } = Layout;
-const socket = io.connect('http://localhost:4000'); //  our server will run on port 4000, so we connect to it from here
+// const socket = io.connect('http://localhost:4000'); //  our server will run on port 4000, so we connect to it from here
 
 function App() {
   const [username, setUsername] = useState(''); 
@@ -20,7 +20,7 @@ function App() {
         <Logo />
         <MenuList />
       </Sider>
-      <Router>
+      {/* <Router>
       <div className='App'>
         <Routes>
           <Route
@@ -37,7 +37,7 @@ function App() {
           />
         </Routes>
       </div>
-      </Router>
+      </Router> */}
     </Layout>
   );
 }

@@ -1,4 +1,5 @@
-import styles from './styles.module.css';
+// import './index.css';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Chat = ({ username, setUsername, room, setRoom, socket }) => {
