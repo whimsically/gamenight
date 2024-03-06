@@ -1,4 +1,4 @@
-const {User, Group} = require('../models');
+const {User, Group } = require('../models');
 const {signToken, AuthenticationError} = require('../utils/auth');
 
 const resolvers = {
@@ -104,16 +104,34 @@ const resolvers = {
                 if (!addUser) {
                     throw new Error('User not found');
                 }
-
+              
                 group.users.push(addUser._id);
                 await group.save();
                 
                 return group;
 
             } catch (error) {
-                throw new Error('Erropr')
+                throw new Error('Errop')
             };          
         },
+        //send message
+          sendMessage: async (parent, args, { user }) => {
+            try {
+                if (!user) throw new AuthenticationError('Not logged in')
+                
+                const messages = await Group.findOneAndUpdate(
+                    {_id: args.toGroup},
+                    { $addToSet: { groupChat: { from: args.from, content: args.content } } },
+                    { new: true }
+                    );
+
+            return messages
+
+            } catch(err) {
+                console.log(err)
+                throw err
+            }
+          }
 
     }
 
