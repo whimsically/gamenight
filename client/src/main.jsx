@@ -1,26 +1,10 @@
-import './App.css';
-import Profile  from './pages/Profile';
-import Chats from './pages/Chats';
-import Players from './pages/Players';
-import Games from './pages/Games';
-import Scheduler from './pages/Scheduler';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App.jsx'
+import './index.css'
 
-function App() {
-  return (
-    <Router>
-      <div>
-        <Header />
-        <Routes>
-          <Route path="/Profile" element={<Profile />} />
-          <Route path="/Chats" element={<Chats />} />
-          <Route path="/Players" element={<Players />} />
-          <Route path="/Games" element={<Games />} />
-          <Route path="/Scheduler" element={<Scheduler />} />
-        </Routes>
-      </div>
-      <Footer />
-    </Router>
-  );
-}
-
-export default App;
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+)
