@@ -27,14 +27,23 @@ const typeDefs = `
     me: User
     group(groupId: ID!): Group
     groups: [Group]
+    getUserUnavailableDays(userId: ID!): [User!]
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
+    createUser(username: String!, email: String!, password: String!): Auth
+    updateUser(_id: ID!, username: String, email: String, profilePic: String, unavailableDays: [String]): User
+    deleteUser(_id: ID!): User
     login(email: String!, password: String!): Auth
-    setUserUnavailableDays(username: String!, unavailableDays: [String!]): User
+
     createGroup(groupName: String!, groupCreator: String!): Group
+    updateGroup(_id: ID!, groupName: String, groupPicture: String, groupMembers: [String]): Group
     addGroupMember(groupId: ID!, username: String!): Group
+    deleteGroup(_id: ID!): Group
+
+    setUserUnavailableDays(username: String!, unavailableDays: [String!]): User
+    updateUserUnavailableDays(): User
+    deleteUserUnavailableDays(userId: ID!): User
 
   }
    `;
