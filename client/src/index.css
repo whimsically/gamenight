@@ -39,7 +39,7 @@
 
 }
 
-.logo {
+/* .logo {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -59,11 +59,11 @@
   font-size: 1.5rem;
   border-radius: 50%;
   background: rgba(130, 72, 197, 0.88);
-}
+} */
 
 .menu-bar {
   height: 68vh;
-  margin-top: 2rem;
+  margin-top: 10rem;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -73,18 +73,23 @@
 }
 
 .toggle-theme-btn {
-    position: relative;
-    bottom: 200px;
-    left: 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
+  position: absolute;
+  bottom: 80px;
+  left: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 }
 
 .toggle {
-    margin-left: 15px;
-}
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 
 body {
   margin: auto;
