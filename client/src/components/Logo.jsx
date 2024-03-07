@@ -1,4 +1,4 @@
-// import React from 'react';
+
 import { FireFilled } from '@ant-design/icons';
 
 
@@ -6,10 +6,10 @@ const Logo = () => {
     return (
         <div className="logo">
             <div className="logo-icon">
-                <FireFilled />
+                 <FireFilled />
             </div>
-        </div>
-    )
-}
+         </div>
+     )
+ }
 
-export default Logo;
+ export default Logo;
