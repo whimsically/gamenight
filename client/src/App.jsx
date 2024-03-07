@@ -14,6 +14,12 @@ const { Header, Sider, Content } = Layout;
 
 function App() {
 
+  const [username, setUsername] = useState('');
+  const [room, setRoom] = useState('');
+  const [socket, setSocket] = useState(null);
+  const [darkTheme, setDarkTheme] = useState (true);
+  const [collapsed, setCollapsed] = useState (false);
+
 
   // useEffect(() => {
   //   // Connect to the socket when the component mounts
@@ -44,6 +50,14 @@ function App() {
     setDarkTheme(!darkTheme);
   };
 
+  const {
+    token: {colorBgContainer},
+  } = theme.useToken();
+
+  const toggleTheme = () => {
+    setDarkTheme(!darkTheme);
+  };
+
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsed={collapsed}
@@ -53,6 +67,7 @@ function App() {
       width={400} 
       className="sidebar"
       >
+
       <Button
           type="text"
           className='toggle'
