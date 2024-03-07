@@ -26,17 +26,26 @@ const resolvers = {
 
         group: async (parent, args) => {
             try {
-                const groupData = await Group.find({groupId: args.groupId})
-                return groupData
+                const groupData = await Group.find({groupId: args.groupId});
+                return groupData;
             } catch {throw new Error('Could not get group')}
         },
 
         groups: async () => {
             try {
-                const groupData = await Group.find({}) 
-                return groupData
-            } catch {throw new Error('Could not get groups')}
+                const groupData = await Group.find({}) ;
+                return groupData;
+            } catch {throw new Error('Could not get groups')};
         },
+        
+        //get groupChat
+        getMessages: async (parent, args) => {
+            try {
+                const messageData = await Group.findOne({ _id: args.group }).populate('groupChat');
+                return messageData;
+
+            } catch {throw new Error('Could not get group messages')};
+        }
     },
 
 // I wasn't completely sure which of the mutations I created were completely 100% necessary, so I went ahead and added the ones I knew we would need
