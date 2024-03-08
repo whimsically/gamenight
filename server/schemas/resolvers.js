@@ -37,7 +37,7 @@ const resolvers = {
                 return groupData;
             } catch {throw new Error('Could not get groups')};
         },
-        
+
         //get groupChat
         getMessages: async (parent, args) => {
             try {
@@ -55,20 +55,25 @@ const resolvers = {
         createUser: async (parent, {username, email, password}) => {
             const userData = await User.create({ username, email, password});
             const token = signToken(userData);
-            return {token, user};
+            return {token, userData};
         },
 
         // Login pulled from classwork
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
+
+            console.log(user);
+            console.log(password);
       
             if (!user) {
+            console.log(`can't find user`);
               throw AuthenticationError;
             }
       
             const correctPw = await user.isCorrectPassword(password);
       
             if (!correctPw) {
+                console.log('password incorrect');
               throw AuthenticationError;
             }
       
