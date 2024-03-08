@@ -48,11 +48,12 @@ const typeDefs = `
     addGroupMember(groupId: ID!, username: String!): Group
     deleteGroup(_id: ID!): Group
 
-    setUserUnavailableDays(username: String!, unavailableDays: [String!]): User
+    setUserUnavailableDays(username: String!, unavailableDays: [String]!): User
     updateUserUnavailableDays(): User
     deleteUserUnavailableDays(userId: ID!): User
 
     sendMessage(from: String! content: String! toGroup: ID!): Message!
+    getMessages(group: ID!): [Message]!
 
   }
    `;
