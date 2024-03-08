@@ -10,16 +10,20 @@ import './index.css';
 // import Chat from './pages/Chats';
 // import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
+
+import { Outlet } from 'react-router-dom';
+
+
 const { Header, Sider, Content } = Layout;
+
 
 function App() {
 
-  const [username, setUsername] = useState('');
-  const [room, setRoom] = useState('');
-  const [socket, setSocket] = useState(null);
+  // const [username, setUsername] = useState('');
+  // const [room, setRoom] = useState('');
+  // const [socket, setSocket] = useState(null);
   const [darkTheme, setDarkTheme] = useState (true);
   const [collapsed, setCollapsed] = useState (false);
-
 
   // useEffect(() => {
   //   // Connect to the socket when the component mounts
@@ -36,23 +40,10 @@ function App() {
   // const [username, setUsername] = useState('');
   // const [room, setRoom] = useState('');
   // const [socket, setSocket] = useState(null);
-
-  const [darkTheme, setDarkTheme] = useState (true);
-  const [collapsed, setCollapsed] = useState (false);
-
-
   const {
     token: {colorBgContainer, borderRadiusLG},
   } = theme.useToken();
 
-
-  const toggleTheme = () => {
-    setDarkTheme(!darkTheme);
-  };
-
-  const {
-    token: {colorBgContainer},
-  } = theme.useToken();
 
   const toggleTheme = () => {
     setDarkTheme(!darkTheme);
@@ -67,7 +58,6 @@ function App() {
       width={400} 
       className="sidebar"
       >
-
       <Button
           type="text"
           className='toggle'
@@ -91,7 +81,7 @@ function App() {
               borderRadius: borderRadiusLG,
             }}
           >
-          Content
+          <Outlet />
           {/* <Router>
             <div className='App'>
               <Routes>
