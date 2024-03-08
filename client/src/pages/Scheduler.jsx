@@ -6,7 +6,7 @@
 //   DayView,
 // } from '@devexpress/dx-react-scheduler-material-ui';
 
-// const Scheduler = () => {
+const Scheduler = () => {
 //   const [currentDate, setCurrentDate] = useState(new Date().toISOString()); 
 
 
@@ -34,7 +34,9 @@
 //       </Scheduler>
 //     </Paper>
 //   );
-// };
 
-// export default Scheduler;
+return <h1>Scheduler Page</h1>
+};
+
+export default Scheduler;
 
