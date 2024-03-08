@@ -29,14 +29,14 @@ const userSchema = new Schema({
       values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], message: 'Days of the week only!' 
     }
   },
-  groups: {
-    type: [Schema.Types.ObjectId],
+  groups: [{
+    type: Schema.Types.ObjectId,
     ref: 'Group'
-},
- pendingInvites: {
-  type: [Schema.Types.ObjectId],
+}],
+ pendingInvites: [{
+  type: Schema.Types.ObjectId,
   ref: 'Group'
- }
+ }],
 });
 
 // Set up pre-save middleware to create password
