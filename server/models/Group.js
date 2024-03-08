@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const messageSchema = require('./Message');
 
 const { Schema } = mongoose;
 
@@ -18,7 +19,8 @@ const groupSchema = new Schema({
     },
     groupPicture: {
         type: String
-    }
+    },
+    groupChat: [messageSchema]
 });
 
 const Group = mongoose.model('Group', groupSchema);

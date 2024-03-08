@@ -1,11 +1,21 @@
 const express = require('express');
+
+//apollo
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
+const { typeDefs, resolvers } = require('./schemas');
+
 const path = require('path');
+
+//custom auth middleware
 const { authMiddleware } = require('./utils/auth');
 
-const { typeDefs, resolvers } = require('./schemas');
+//database connection
 const db = require('./config/connection');
+
+//socket.io
+const { Server } = require("socket.io");
+const io = new Server(server);
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -32,6 +42,11 @@ const startApolloServer = async () => {
       res.sendFile(path.join(__dirname, '../client/dist/index.html'));
     });
   }
+
+  //socket connection
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
 
   db.once('open', () => {
     app.listen(PORT, () => {

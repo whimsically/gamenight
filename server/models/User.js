@@ -29,10 +29,14 @@ const userSchema = new Schema({
       values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], message: 'Days of the week only!' 
     }
   },
-  groups: {
-    type: [Schema.Types.ObjectId],
+  groups: [{
+    type: Schema.Types.ObjectId,
     ref: 'Group'
-},
+}],
+ pendingInvites: [{
+  type: Schema.Types.ObjectId,
+  ref: 'Group'
+ }],
 });
 
 // Set up pre-save middleware to create password
@@ -47,7 +51,8 @@ userSchema.pre('save', async function (next) {
 
 // Compare the incoming password with the hashed password
 userSchema.methods.isCorrectPassword = async function (password) {
-  await bcrypt.compare(password, this.password);
+  console.log(this.password);
+  return bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
