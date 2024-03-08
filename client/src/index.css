@@ -15,6 +15,23 @@
   --background: var(--sunset); /* Default background */
 }
 
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.background-image {
+  width: 50%;
+  height: 300px; 
+  object-fit: cover;
+}
+
+.profile-image-container,
+.background-image-container {
+  margin-bottom: 20px;
+}
+
 .linear-gradient {
   background-image: var(--sunset);
   background-image: var(--dark);
