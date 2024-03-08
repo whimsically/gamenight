@@ -1,47 +1,19 @@
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+// import { io } from 'socket.io-client'
 
-// const Chat = ({ username, setUsername, room, setRoom, socket }) => {
-//     const navigate = useNavigate();
+//top lvl component gets groups
+//pass id as prop
+//useEffect to get all messages from group on load -> load into state
+//open socket connection
+//socket emit event to join room
+//socket emit.to(room) on server
 
-//     const joinRoom = () => {
-//         if (room !== '' && username !== '') {
-//           socket.emit('join_room', { username, room });
-//           navigate('/chats', { replace: true });
-//         }
-//     };
-
-//   return (
-//     <div>
-//       <div>
-//         <h1>{`Chat`}</h1>
-//         <input
-//           className="input"
-//           placeholder='Username...'
-//           onChange={(e) => setUsername(e.target.value)}
-//         />
-
-//         <select
-//           className="select"
-//           onChange={(e) => setRoom(e.target.value)}
-//         >
-//           <option>-- Select Room --</option>
-//           <option value='javascript'>JavaScript</option>
-//           <option value='node'>Node</option>
-//           <option value='express'>Express</option>
-//           <option value='react'>React</option>
-//         </select>
-        
-//         <button className="button" onClick={joinRoom}>Join Room</button>
-//       </div>
-//     </div>
-//   );
-// };
 
 export default function Chats(){
   return (
       <>
       <h1>Chats</h1>
+      {/* map over messages */}
       </>
   )
 };

@@ -6,11 +6,6 @@ import MenuList from './components/MenuList';
 import ToggleThemeButton from './components/ToggleThemeButton';
 import './index.css';
 
-// import io from 'socket.io-client';
-// import Chat from './pages/Chats';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-
 import { Outlet } from 'react-router-dom';
 
 
@@ -19,27 +14,9 @@ const { Header, Sider, Content } = Layout;
 
 function App() {
 
-  // const [username, setUsername] = useState('');
-  // const [room, setRoom] = useState('');
-  // const [socket, setSocket] = useState(null);
   const [darkTheme, setDarkTheme] = useState (true);
   const [collapsed, setCollapsed] = useState (false);
 
-  // useEffect(() => {
-  //   // Connect to the socket when the component mounts
-  //   const newSocket = io.connect('http://localhost:4000');
-  //   setSocket(newSocket);
-
-  //   // Cleanup the socket connection when the component unmounts
-  //   return () => {
-  //     newSocket.disconnect();
-  //   };
-  // }, []);
-
-
-  // const [username, setUsername] = useState('');
-  // const [room, setRoom] = useState('');
-  // const [socket, setSocket] = useState(null);
   const {
     token: {colorBgContainer, borderRadiusLG},
   } = theme.useToken();
@@ -82,24 +59,6 @@ function App() {
             }}
           >
           <Outlet />
-          {/* <Router>
-            <div className='App'>
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <Chat
-                      username={username}
-                      setUsername={setUsername}
-                      room={room}
-                      setRoom={setRoom}
-                      socket={socket}
-                    />
-                  }
-                />
-              </Routes>
-            </div>
-          </Router> */}
         </Content>
       </Layout>
     </Layout>
