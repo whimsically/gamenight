@@ -35,6 +35,7 @@ const typeDefs = `
     group(groupId: ID!): Group
     groups: [Group]
     getUserUnavailableDays(userId: ID!): [User!]
+    getMessages(group: ID!): [Message]!
   }
 
   type Mutation {
@@ -49,11 +50,9 @@ const typeDefs = `
     deleteGroup(_id: ID!): Group
 
     setUserUnavailableDays(username: String!, unavailableDays: [String]!): User
-    updateUserUnavailableDays(): User
     deleteUserUnavailableDays(userId: ID!): User
 
     sendMessage(from: String! content: String! toGroup: ID!): Message!
-    getMessages(group: ID!): [Message]!
 
   }
    `;
