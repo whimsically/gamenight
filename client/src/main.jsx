@@ -41,25 +41,6 @@ const router = createBrowserRouter([
         path: '/games',
         element: <Games />
       },
-
-
-
-      // }, {
-      //   path: '/login',
-      //   element: <Login />
-      // }, {
-      //   path: '/signup',
-      //   element: <Signup />
-      // }, {
-      //   path: '/success',
-      //   element: <Success />
-      // }, {
-      //   path: '/orderHistory',
-      //   element: <OrderHistory />
-      // }, {
-      //   path: '/products/:id',
-      //   element: <Detail />
-      // }
     ]
   }
 ]);

@@ -28,6 +28,10 @@ const typeDefs = `
     content: String!
   }
 
+  type Subscription {
+    groupChat(_id: ID!): [Message!]
+  }
+
   type Query {
     users: [User]
     user(username: String!): User

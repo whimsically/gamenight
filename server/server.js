@@ -9,6 +9,7 @@ const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/dra
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
+const { MongodbPubSub } = require('graphql-mongodb-subscriptions')
 
 const path = require('path');
 
@@ -24,10 +25,16 @@ const app = express();
 //creating an http server to enable us to run both websocket and express
 const httpServer = createServer(app);
 
+//pubsub for our subscriptions
+const pubsub = new MongodbPubSub();
+
 // Creating the WebSocket server
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: '/graphql',
+  path: '/subscriptions',
+  connectionParams: {
+    authentication: user.authToken,
+  },
 });
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -36,6 +43,7 @@ const serverCleanup = useServer({ schema }, wsServer);
 
 const server = new ApolloServer({
   schema,
+  context: { pubsub },
   plugins: [
     // Proper shutdown for the HTTP server.
     ApolloServerPluginDrainHttpServer({ httpServer }),
