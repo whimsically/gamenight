@@ -4,6 +4,11 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const { typeDefs, resolvers } = require('./schemas');
+const { createServer } = require('http');
+const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/drainHttpServer');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
+const { WebSocketServer } = require('ws');
+const { useServer } = require('graphql-ws/lib/use/ws');
 
 const path = require('path');
 
@@ -13,15 +18,39 @@ const { authMiddleware } = require('./utils/auth');
 //database connection
 const db = require('./config/connection');
 
-//socket.io
-const { Server } = require("socket.io");
-const io = new Server(server);
-
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+//creating an http server to enable us to run both websocket and express
+const httpServer = createServer(app);
+
+// Creating the WebSocket server
+const wsServer = new WebSocketServer({
+  server: httpServer,
+  path: '/graphql',
+});
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+
+const serverCleanup = useServer({ schema }, wsServer);
+
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
+  plugins: [
+    // Proper shutdown for the HTTP server.
+    ApolloServerPluginDrainHttpServer({ httpServer }),
+    // Proper shutdown for the WebSocket server.
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            await serverCleanup.dispose();
+          },
+        };
+      },
+    },
+  ],
+
 });
 
 // Create a new instance of an Apollo server with the GraphQL schema
@@ -43,13 +72,8 @@ const startApolloServer = async () => {
     });
   }
 
-  //socket connection
-  io.on('connection', (socket) => {
-    console.log('a user connected');
-  });
-
   db.once('open', () => {
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
     });
