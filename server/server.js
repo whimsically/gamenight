@@ -9,7 +9,7 @@ const { ApolloServerPluginDrainHttpServer } = require('@apollo/server/plugin/dra
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { WebSocketServer } = require('ws');
 const { useServer } = require('graphql-ws/lib/use/ws');
-const { MongodbPubSub } = require('graphql-mongodb-subscriptions')
+const { PubSub } = require('graphql-subscriptions');
 
 const path = require('path');
 
@@ -17,7 +17,7 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 
 //database connection
-const db = require('./config/connection');
+const database = require('./config/connection');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -26,15 +26,12 @@ const app = express();
 const httpServer = createServer(app);
 
 //pubsub for our subscriptions
-const pubsub = new MongodbPubSub();
+const pubsub = new PubSub();
 
 // Creating the WebSocket server
 const wsServer = new WebSocketServer({
   server: httpServer,
   path: '/subscriptions',
-  connectionParams: {
-    authentication: user.authToken,
-  },
 });
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -80,7 +77,7 @@ const startApolloServer = async () => {
     });
   }
 
-  db.once('open', () => {
+  database.once('open', () => {
     httpServer.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
