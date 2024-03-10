@@ -83,6 +83,22 @@ const resolvers = {
             return { token, user };
           },
 
+          updateUser: async (parent, { _id, username, email, profilePic, unavailableDays }) => {
+            const updatedUser = await User.findByIdAndUpdate(_id, { username, email, profilePic, unavailableDays }, { new: true });
+            if (!updatedUser) {
+                throw new Error('User not found');
+            }
+            return updatedUser;
+        },
+
+        deleteUser: async (parent, { _id }) => {
+            const deletedUser = await User.findByIdAndDelete(_id);
+            if (!deletedUser) {
+                throw new Error('User not found');
+            }
+            return deletedUser;
+        },
+
         //   Allows a user to create a group as groupCreator
           createGroup: async (parent, { groupName, groupCreator }) => {
             try {
@@ -129,6 +145,32 @@ const resolvers = {
                 throw new Error('Errop')
             };          
         },
+
+        updateGroup: async (parent, { _id, groupName, groupPicture, groupMembers }) => {
+            const updatedGroup = await Group.findByIdAndUpdate(_id, { groupName, groupPicture, groupMembers: groupMembers }, { new: true }).populate('users');
+            if (!updatedGroup) {
+                throw new Error('Group not found');
+            }
+            return updatedGroup;
+        },
+        
+        deleteGroup: async (parent, { _id }) => {
+            const deletedGroup = await Group.findByIdAndDelete(_id);
+            if (!deletedGroup) {
+                throw new Error('Group not found');
+            }
+            return deletedGroup;
+        },
+        
+        setUserUnavailableDays: async (parent, { username, unavailableDays }) => {
+            const user = await User.findOneAndUpdate({ username }, { unavailableDays }, { new: true });
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        },
+        
+
         //send message
           sendMessage: async (parent, { from, content, toGroup }, { user }) => {
             try {
