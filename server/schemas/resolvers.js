@@ -1,4 +1,5 @@
 const {User, Group } = require('../models');
+const { withFilter } = require('graphql-subscriptions');
 const {signToken, AuthenticationError} = require('../utils/auth');
 
 const resolvers = {
@@ -129,17 +130,23 @@ const resolvers = {
             };          
         },
         //send message
-          sendMessage: async (parent, args, { user }) => {
+          sendMessage: async (parent, { from, content, toGroup }, { user }) => {
             try {
                 if (!user) throw new AuthenticationError('Not logged in')
                 
                 const messages = await Group.findOneAndUpdate(
-                    {_id: args.toGroup},
-                    { $addToSet: { groupChat: { from: args.from, content: args.content } } },
+                    {_id: toGroup},
+                    { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
 
-            return messages
+            return messages.save().then((result) => 
+            {
+                const newMessage = result;
+                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage });
+                return newMessage;
+
+            })
 
             } catch(err) {
                 console.log(err)
@@ -147,6 +154,16 @@ const resolvers = {
             }
           }
 
+    },
+
+    Subscription: {
+        groupChat: {
+            resolve: (payload) => {
+                return payload.newMesage;
+              },
+
+            subscribe: () => pubsub.asyncIterator("NEW_CHAT_MESSAGE"),
+        },
     }
 
 };

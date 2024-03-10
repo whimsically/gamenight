@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { io } from 'socket.io-client'
+
 
 //top lvl component gets groups
 //pass id as prop
