@@ -42,12 +42,6 @@
 }
 
 * {
-  margin: 0px;
-  padding: 0;
-  border: none;
-  outline: none;
-  list-style: none;
-  box-sizing: border-box;
   font-family: "Kode Mono", monospace;
 }
 
