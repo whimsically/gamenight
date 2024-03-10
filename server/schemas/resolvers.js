@@ -83,6 +83,22 @@ const resolvers = {
             return { token, user };
           },
 
+          updateUser: async (parent, { _id, username, email, profilePic, unavailableDays }) => {
+            const updatedUser = await User.findByIdAndUpdate(_id, { username, email, profilePic, unavailableDays }, { new: true });
+            if (!updatedUser) {
+                throw new Error('User not found');
+            }
+            return updatedUser;
+        },
+
+        deleteUser: async (parent, { _id }) => {
+            const deletedUser = await User.findByIdAndDelete(_id);
+            if (!deletedUser) {
+                throw new Error('User not found');
+            }
+            return deletedUser;
+        },
+
         //   Allows a user to create a group as groupCreator
           createGroup: async (parent, { groupName, groupCreator }) => {
             try {
@@ -129,6 +145,7 @@ const resolvers = {
                 throw new Error('Errop')
             };          
         },
+        
         //send message
           sendMessage: async (parent, { from, content, toGroup }, { user }) => {
             try {
