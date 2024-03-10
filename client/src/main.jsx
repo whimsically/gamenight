@@ -11,6 +11,8 @@ import Players from './pages/Players.jsx';
 import Profile from './pages/Profile.jsx';
 import Setting from './pages/Setting.jsx';
 import Scheduler from './pages/Scheduler.jsx';
+import Signup from './pages/Signup.jsx';
+import Login from './pages/Login.jsx';
 
 
 const router = createBrowserRouter([
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
       }, {
         path: '/games',
         element: <Games />
+      },
+      {
+        path: '/login',
+        element: <Login />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
       },
     ]
   }
