@@ -1,8 +1,28 @@
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
-export default function Setting(){
-    return (
-        <>
-        <h1>Setting</h1>
-        </>
-    )
-};
+function Settings({ onDeleteProfile }) {
+  const [profileDeleted, setProfileDeleted] = useState(false);
+
+  const handleDeleteProfile = () => {
+    // Call onDeleteProfile function to trigger profile deletion
+    onDeleteProfile();
+    // Set profileDeleted to true to trigger the redirect
+    setProfileDeleted(true);
+  };
+
+  if (profileDeleted) {
+    // Redirect to the homepage if the profile is deleted
+    return <Redirect to="/" />;
+  }
+
+  return (
+    <div>
+      <h1>Settings</h1>
+      <p>This is where you can manage your profile settings.</p>
+      <button onClick={handleDeleteProfile}>Delete Profile</button>
+    </div>
+  );
+}
+
+export default Settings;
