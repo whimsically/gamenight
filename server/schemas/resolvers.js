@@ -1,6 +1,9 @@
 const {User, Group } = require('../models');
-const { withFilter } = require('graphql-subscriptions');
+const { add } = require('../models/Message');
 const {signToken, AuthenticationError} = require('../utils/auth');
+const { PubSub } = require('graphql-subscriptions');
+
+const pubsub = new PubSub();
 
 const resolvers = {
     Query: {
@@ -108,13 +111,15 @@ const resolvers = {
                 }
 
                 const newGroup = new Group({
-                    name: groupName,
-                    users: [creator._id],
+                    groupName: groupName,
+                    groupCreator: [creator._id],
                 });
 
                 const savedGroup = await newGroup.save();
-    
+
+                savedGroup.groupMembers.push(creator._id)
                 creator.groups.push(savedGroup._id);
+
                 await creator.save();
     
                 return savedGroup;
@@ -136,7 +141,7 @@ const resolvers = {
                     throw new Error('User not found');
                 }
               
-                group.users.push(addUser._id);
+                group.groupMembers.push(addUser._id);
                 await group.save();
                 
                 return group;
@@ -172,23 +177,20 @@ const resolvers = {
         
 
         //send message
-          sendMessage: async (parent, { from, content, toGroup }, { user }) => {
+          sendMessage: async (parent, { from, content, toGroup }) => {
             try {
-                if (!user) throw new AuthenticationError('Not logged in')
-                
-                const messages = await Group.findOneAndUpdate(
+                const addMessageToGroup = await Group.findOneAndUpdate(
                     {_id: toGroup},
                     { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
+                
+                const groupChat = addMessageToGroup.groupChat;
+                const message = groupChat[groupChat.length-1];
 
-            return messages.save().then((result) => 
-            {
-                const newMessage = result;
-                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage });
-                return newMessage;
-
-            })
+                pubsub.publish("NEW_CHAT_MESSAGE", { message });
+                console.log(message);
+                return message;
 
             } catch(err) {
                 console.log(err)
