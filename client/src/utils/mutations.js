@@ -4,33 +4,22 @@ export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
       token
-      user {
-        _id
-      }
     }
   }
 `;
 
 export const CREATE_USER = gql`
-  mutation createUser(
-    $username: String!
-    $email: String!
-    $password: String!
-  ) {
-    createUser(
-      userame: $username
-      email: $email
-      password: $password
-    ) {
-      token
-      user {
-        _id
-      }
+mutation Mutation($username: String!, $email: String!, $password: String!) {
+  createUser(username: $username, email: $email, password: $password) {
+    token
+    user {
+      _id
     }
   }
+}
 `;
 
-const POST_MESSAGE = gql`
+export const POST_MESSAGE = gql`
   mutation($from: String!, $content: String!, $toGroup: ID!) {
     sendMessage(from: $from, content: $content, toGroup: $toGroup)
     {
@@ -42,3 +31,14 @@ const POST_MESSAGE = gql`
     }
   }
 `;
+
+
+export const MESSAGE_SUBSCRIBE = gql`
+  subscription ($group: ID!) {
+    newMessage(toGroup: $group) {
+	    from
+	    content
+	    sentAt
+  }
+}
+`

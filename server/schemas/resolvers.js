@@ -1,7 +1,7 @@
 const {User, Group } = require('../models');
-const { add } = require('../models/Message');
 const {signToken, AuthenticationError} = require('../utils/auth');
 const { PubSub } = require('graphql-subscriptions');
+const { withFilter } = require('graphql-subscriptions');
 
 const pubsub = new PubSub();
 
@@ -56,12 +56,11 @@ const resolvers = {
     Mutation: {
 
 // createUser based on mutation with auth
-        createUser: async (parent, {username, email, password}) => {
-            const userData = await User.create({ username, email, password});
-            const token = signToken(userData);
-            return {token, userData};
-        },
-
+    createUser: async (parent, { username, email, password }) => {
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+    },
         // Login pulled from classwork
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
@@ -179,18 +178,13 @@ const resolvers = {
         //send message
           sendMessage: async (parent, { from, content, toGroup }) => {
             try {
+                pubsub.publish("NEW_CHAT_MESSAGE",{ newMessage: { from, content } });
                 const addMessageToGroup = await Group.findOneAndUpdate(
                     {_id: toGroup},
                     { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
-                
-                const groupChat = addMessageToGroup.groupChat;
-                const message = groupChat[groupChat.length-1];
-
-                pubsub.publish("NEW_CHAT_MESSAGE", { message });
-                console.log(message);
-                return message;
+                return addMessageToGroup;
 
             } catch(err) {
                 console.log(err)
@@ -201,14 +195,21 @@ const resolvers = {
     },
 
     Subscription: {
-        groupChat: {
-            resolve: (payload) => {
-                return payload.newMesage;
-              },
-
-            subscribe: () => pubsub.asyncIterator("NEW_CHAT_MESSAGE"),
+        newMessage: {
+          subscribe: withFilter(
+            () => pubsub.asyncIterator('NEW_MESSAGE'),
+            (payload, variables) => {
+              return (
+                payload.newMessage.toGroup === variables.group
+              );
+    
+            },
+    
+          ),
+    
         },
-    }
+    
+      },
 
 };
 

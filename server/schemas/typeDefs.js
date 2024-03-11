@@ -30,7 +30,7 @@ const typeDefs = `
   }
 
   type Subscription {
-    groupChat(_id: ID!): Message!
+    newMessage(group: ID!): [Message!]
   }
 
   type Query {
