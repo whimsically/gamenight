@@ -4,16 +4,21 @@
     "description": "",
     "main": "server/server.js",
     "scripts": {
-      "start": "node server --ignore client",
-      "develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
-      "install": "cd server && npm i && cd ../client && npm i",
-      "build": "cd client && npm run build"
+        "start": "node server --ignore client",
+        "develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
+        "install": "cd server && npm i && cd ../client && npm i",
+        "build": "cd client && npm run build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-      "concurrently": "^5.1.0"
+        "concurrently": "^5.1.0"
+    },
+    "dependencies": {
+        "@graphql-tools/schema": "^10.0.3",
+        "graphql-subscriptions": "^2.0.0",
+        "graphql-ws": "^5.15.0",
+        "ws": "^8.16.0"
     }
-  }
-  
+}

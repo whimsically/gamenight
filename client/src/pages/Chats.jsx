@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// import { io } from 'socket.io-client'
 
 //top lvl component gets groups
 //pass id as prop
@@ -13,7 +12,12 @@ export default function Chats(){
   return (
       <>
       <h1>Chats</h1>
-      {/* map over messages */}
+      <div>
+
+      </div>
+      <label for='chat-message'>Message:</label>
+      <input type='text' name='chat-message'></input>
+      <input type='submit'></input>
       </>
   )
 };

@@ -1,4 +1,5 @@
 const {User, Group } = require('../models');
+const { withFilter } = require('graphql-subscriptions');
 const {signToken, AuthenticationError} = require('../utils/auth');
 
 const resolvers = {
@@ -82,6 +83,22 @@ const resolvers = {
             return { token, user };
           },
 
+          updateUser: async (parent, { _id, username, email, profilePic, unavailableDays }) => {
+            const updatedUser = await User.findByIdAndUpdate(_id, { username, email, profilePic, unavailableDays }, { new: true });
+            if (!updatedUser) {
+                throw new Error('User not found');
+            }
+            return updatedUser;
+        },
+
+        deleteUser: async (parent, { _id }) => {
+            const deletedUser = await User.findByIdAndDelete(_id);
+            if (!deletedUser) {
+                throw new Error('User not found');
+            }
+            return deletedUser;
+        },
+
         //   Allows a user to create a group as groupCreator
           createGroup: async (parent, { groupName, groupCreator }) => {
             try {
@@ -128,18 +145,50 @@ const resolvers = {
                 throw new Error('Errop')
             };          
         },
+
+        updateGroup: async (parent, { _id, groupName, groupPicture, groupMembers }) => {
+            const updatedGroup = await Group.findByIdAndUpdate(_id, { groupName, groupPicture, groupMembers: groupMembers }, { new: true }).populate('users');
+            if (!updatedGroup) {
+                throw new Error('Group not found');
+            }
+            return updatedGroup;
+        },
+        
+        deleteGroup: async (parent, { _id }) => {
+            const deletedGroup = await Group.findByIdAndDelete(_id);
+            if (!deletedGroup) {
+                throw new Error('Group not found');
+            }
+            return deletedGroup;
+        },
+        
+        setUserUnavailableDays: async (parent, { username, unavailableDays }) => {
+            const user = await User.findOneAndUpdate({ username }, { unavailableDays }, { new: true });
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        },
+        
+
         //send message
-          sendMessage: async (parent, args, { user }) => {
+          sendMessage: async (parent, { from, content, toGroup }, { user }) => {
             try {
                 if (!user) throw new AuthenticationError('Not logged in')
                 
                 const messages = await Group.findOneAndUpdate(
-                    {_id: args.toGroup},
-                    { $addToSet: { groupChat: { from: args.from, content: args.content } } },
+                    {_id: toGroup},
+                    { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
 
-            return messages
+            return messages.save().then((result) => 
+            {
+                const newMessage = result;
+                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage });
+                return newMessage;
+
+            })
 
             } catch(err) {
                 console.log(err)
@@ -147,6 +196,16 @@ const resolvers = {
             }
           }
 
+    },
+
+    Subscription: {
+        groupChat: {
+            resolve: (payload) => {
+                return payload.newMesage;
+              },
+
+            subscribe: () => pubsub.asyncIterator("NEW_CHAT_MESSAGE"),
+        },
     }
 
 };
