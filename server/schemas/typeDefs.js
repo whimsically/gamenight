@@ -26,10 +26,11 @@ const typeDefs = `
     _id: ID!
     from: String!
     content: String!
+    sentAt: String
   }
 
   type Subscription {
-    groupChat(_id: ID!): [Message!]
+    newMessage(group: ID!): [Message!]
   }
 
   type Query {
