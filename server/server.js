@@ -25,13 +25,10 @@ const app = express();
 //creating an http server to enable us to run both websocket and express
 const httpServer = createServer(app);
 
-//pubsub for our subscriptions
-const pubsub = new PubSub();
-
 // Creating the WebSocket server
 const wsServer = new WebSocketServer({
   server: httpServer,
-  path: '/subscriptions',
+  path: '/graphql',
 });
 
 const schema = makeExecutableSchema({ typeDefs, resolvers });
@@ -40,7 +37,7 @@ const serverCleanup = useServer({ schema }, wsServer);
 
 const server = new ApolloServer({
   schema,
-  context: { pubsub },
+  context: { PubSub },
   plugins: [
     // Proper shutdown for the HTTP server.
     ApolloServerPluginDrainHttpServer({ httpServer }),

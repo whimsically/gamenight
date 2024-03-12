@@ -24,11 +24,6 @@ const MenuList = ({ darkTheme }) => {
                 Schedule
             </Menu.Item>
             </Link>
-            <Link to="/chats">
-            <Menu.Item key="chats" icon={<WechatOutlined/>} >
-                Chats
-            </Menu.Item>
-            </Link>
             <Link to='/players'>
             <Menu.Item key="players" icon={<UserOutlined />}>
                 Players

@@ -1,11 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet');
 
+
 :root {
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   font-family: "Kode Mono", monospace;
-  width: 100%;
+  width: 80vw;
+  height: 100%;
   --sunset: linear-gradient(to bottom, #f4a261, #e76f51);
   --dark: linear-gradient(to bottom, #1b263b, #0d1b2a);
   --light: linear-gradient(to bottom, #fffcf2, #ccc5b9);
@@ -14,6 +16,12 @@
   --pastel: linear-gradient(to bottom, #efc3e6, #9c89b8);
   --background: var(--sunset); /* Default background */
 }
+/* 
+@media (max-wdith: 800px){
+  .menu-bar{
+    display: none;
+  }
+} */
 
 .profile-image {
   width: 150px;
@@ -73,21 +81,18 @@
 } */
 
 .menu-bar {
-  height: 68vh;
+  height: 100vh;
   margin-top: 10rem;
   display: flex;
   flex-direction: column;
   gap: 15px;
   font-size: 1rem;
   position: relative;
-
 }
 
 .toggle-theme-btn {
   position: absolute;
-  bottom: 80px;
-  left: 15px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
@@ -95,12 +100,11 @@
 
 .toggle {
   position: absolute;
-  bottom: 30px;
-  left: 20px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
+  background-color: white;
 }
 
 body {

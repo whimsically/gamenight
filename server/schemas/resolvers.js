@@ -1,6 +1,9 @@
 const {User, Group } = require('../models');
-const { withFilter } = require('graphql-subscriptions');
 const {signToken, AuthenticationError} = require('../utils/auth');
+const { PubSub } = require('graphql-subscriptions');
+const { withFilter } = require('graphql-subscriptions');
+
+const pubsub = new PubSub();
 
 const resolvers = {
     Query: {
@@ -53,12 +56,11 @@ const resolvers = {
     Mutation: {
 
 // createUser based on mutation with auth
-        createUser: async (parent, {username, email, password}) => {
-            const userData = await User.create({ username, email, password});
-            const token = signToken(userData);
-            return {token, userData};
-        },
-
+    createUser: async (parent, { username, email, password }) => {
+        const user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+    },
         // Login pulled from classwork
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
@@ -108,13 +110,15 @@ const resolvers = {
                 }
 
                 const newGroup = new Group({
-                    name: groupName,
-                    users: [creator._id],
+                    groupName: groupName,
+                    groupCreator: [creator._id],
                 });
 
                 const savedGroup = await newGroup.save();
-    
+
+                savedGroup.groupMembers.push(creator._id)
                 creator.groups.push(savedGroup._id);
+
                 await creator.save();
     
                 return savedGroup;
@@ -136,7 +140,7 @@ const resolvers = {
                     throw new Error('User not found');
                 }
               
-                group.users.push(addUser._id);
+                group.groupMembers.push(addUser._id);
                 await group.save();
                 
                 return group;
@@ -170,25 +174,29 @@ const resolvers = {
             return user;
         },
         
+        deleteUserUnavailableDays: async (parent, {userId}) => {
+
+            const user = await User.findByIdAndUpdate(userId, {$unset: { unavailableDays: ''}}, {new:true});
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        },
 
         //send message
-          sendMessage: async (parent, { from, content, toGroup }, { user }) => {
+          sendMessage: async (parent, { from, content, toGroup }) => {
             try {
-                if (!user) throw new AuthenticationError('Not logged in')
-                
-                const messages = await Group.findOneAndUpdate(
+                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup } });
+                const addMessageToGroup = await Group.findOneAndUpdate(
                     {_id: toGroup},
                     { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
 
-            return messages.save().then((result) => 
-            {
-                const newMessage = result;
-                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage });
-                return newMessage;
-
-            })
+            const groupChat = addMessageToGroup.groupChat;
+            const addedMessage = groupChat[groupChat.length-1];
+            pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup, sentAt: addedMessage.sentAt } });
+            return addedMessage;
 
             } catch(err) {
                 console.log(err)
@@ -199,14 +207,17 @@ const resolvers = {
     },
 
     Subscription: {
-        groupChat: {
-            resolve: (payload) => {
-                return payload.newMesage;
-              },
-
-            subscribe: () => pubsub.asyncIterator("NEW_CHAT_MESSAGE"),
+        newMessage: {
+          subscribe: withFilter(
+            () => pubsub.asyncIterator('NEW_CHAT_MESSAGE'),
+            (payload, variables) => {
+              return (
+                payload.newMessage.toGroup === variables.toGroup
+              );
+            },
+          ),
         },
-    }
+      },
 
 };
 
