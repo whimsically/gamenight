@@ -5,7 +5,6 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/Home.jsx';
-import Chats from './pages/Chats.jsx';
 import Games from './pages/Games.jsx';
 import Players from './pages/Players.jsx';
 import Profile from './pages/Profile.jsx';
@@ -29,9 +28,6 @@ const router = createBrowserRouter([
       }, {
         path: '/players',
         element: <Players />
-      }, {
-        path: '/chats',
-        element: <Chats />
       }, {
         path: '/profile',
         element: <Profile />
