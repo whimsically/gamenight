@@ -30,12 +30,12 @@ export const POST_MESSAGE = gql`
 `;
 
 
-export const MESSAGE_SUBSCRIBE = gql`
-  subscription ($group: ID!) {
+export const GET_MESSAGES = gql`
+  subscription ($toGroup: ID!) {
     newMessage(toGroup: $group) {
 	    from
 	    content
-	    sentAt
+      sentAt
   }
 }
 `

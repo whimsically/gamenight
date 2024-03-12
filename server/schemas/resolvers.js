@@ -186,13 +186,17 @@ const resolvers = {
         //send message
           sendMessage: async (parent, { from, content, toGroup }) => {
             try {
-                pubsub.publish("NEW_CHAT_MESSAGE",{ newMessage: { from, content } });
+                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup } });
                 const addMessageToGroup = await Group.findOneAndUpdate(
                     {_id: toGroup},
                     { $addToSet: { groupChat: { from: from, content: content } } },
                     { new: true }
                     );
-                return addMessageToGroup;
+
+            const groupChat = addMessageToGroup.groupChat;
+            const addedMessage = groupChat[groupChat.length-1];
+            pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup, sentAt: addedMessage.sentAt } });
+            return addedMessage;
 
             } catch(err) {
                 console.log(err)
@@ -205,18 +209,14 @@ const resolvers = {
     Subscription: {
         newMessage: {
           subscribe: withFilter(
-            () => pubsub.asyncIterator('NEW_MESSAGE'),
+            () => pubsub.asyncIterator('NEW_CHAT_MESSAGE'),
             (payload, variables) => {
               return (
-                payload.newMessage.toGroup === variables.group
+                payload.newMessage.toGroup === variables.toGroup
               );
-    
             },
-    
           ),
-    
         },
-    
       },
 
 };
