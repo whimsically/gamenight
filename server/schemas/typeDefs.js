@@ -42,7 +42,8 @@ const typeDefs = `
     group(groupId: ID!): Group
     groups: [Group]
     getUserUnavailableDays(userId: ID!): [User!]
-    getMessages(group: ID!): [Message]!
+    getMessages(groupId: ID!): Group
+    getUserGroups(username: String!): User
   }
 
   type Mutation {

@@ -1,6 +1,7 @@
 const {User, Group } = require('../models');
 const {signToken, AuthenticationError} = require('../utils/auth');
 const { PubSub } = require('graphql-subscriptions');
+const { ObjectId } = require('mongoose').Types;
 const { withFilter } = require('graphql-subscriptions');
 
 const pubsub = new PubSub();
@@ -16,21 +17,32 @@ const resolvers = {
 
         user: async (parent, args) => {
             try {
-                const userData = await User.find({username: args.username})
+                const userData = await User.findOne({username: args.username})
                 return userData
             } catch {throw new Error('Could not get user')}
         },
 
+        getUserGroups: async (parent, args) => {
+            try {
+                const userGroups = await User.findOne({username: args.username}).populate('groups');
+                return userGroups;
+            } catch {
+                console.log(err)
+                throw err
+                
+            }
+        },
         me: async (parent, args, context) => {
+            console.log(context);
             if (context.user) {
-              return User.findOne({ _id: context.user._id }).populate('getUserUnavailableDays');
+              return await User.findOne({ _id: context.user._id });
             }
             throw AuthenticationError;
           },
 
         group: async (parent, args) => {
             try {
-                const groupData = await Group.find({groupId: args.groupId});
+                const groupData = await Group.findById(args.groupId);
                 return groupData;
             } catch {throw new Error('Could not get group')}
         },
@@ -42,13 +54,14 @@ const resolvers = {
             } catch {throw new Error('Could not get groups')};
         },
 
-        //get groupChat
-        getMessages: async (parent, args) => {
+        getMessages: async (parent, { groupId }) => {
             try {
-                const messageData = await Group.findOne({ _id: args.group }).populate('groupChat');
-                return messageData;
-
-            } catch {throw new Error('Could not get group messages')};
+                const messages = await Group.findById(groupId).populate('groupChat');
+                return messages;
+            } catch (err) {
+                console.log(err)
+                throw err
+            }
         }
     },
 
@@ -186,7 +199,6 @@ const resolvers = {
         //send message
           sendMessage: async (parent, { from, content, toGroup }) => {
             try {
-                pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup } });
                 const addMessageToGroup = await Group.findOneAndUpdate(
                     {_id: toGroup},
                     { $addToSet: { groupChat: { from: from, content: content } } },

@@ -12,6 +12,7 @@ import Setting from './pages/Setting.jsx';
 import Scheduler from './pages/Scheduler.jsx';
 import Signup from './pages/Signup.jsx';
 import Login from './pages/Login.jsx';
+import Chats from './pages/Chats.jsx';
 
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       },
+      {
+        path: '/chats',
+        element: <Chats />
+      }
     ]
   }
 ]);

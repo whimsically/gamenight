@@ -15,6 +15,9 @@ const { Header, Sider, Content } = Layout;
 
 const httpLink = createHttpLink({
   uri: '/graphql',
+  options: {
+    reconnect: true
+  }
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header

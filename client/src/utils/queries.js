@@ -1,28 +1,27 @@
 import { gql } from '@apollo/client';
 
 
-export const QUERY_ME = gql`
-    query queryMe {
-        me {
-            _id
-            profilePic
-            unavailableDays
-            username
-            groups
-            pendingInvites
-        }
+export const QUERY_USER = gql`
+query getUserGroups($username: String!) {
+  getUserGroups(username: $username) {
+    _id
+    groups {
+      _id
+    }
+  }
 }
 `
 
 export const GET_GROUP_CHAT = gql`
-    query getGroupChat {
-        group($groupId) {
-            groupName
-            groupChat{
-                from
-                content
-                sentAt
-            }
-        }
+query GetMessages($groupId: ID!) {
+  getMessages(groupId: $groupId) {
+    groupName
+    groupChat {
+      content
+      from
+      sentAt
+      _id
     }
+  }
+}
 `

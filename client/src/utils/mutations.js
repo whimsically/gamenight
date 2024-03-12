@@ -29,6 +29,17 @@ export const POST_MESSAGE = gql`
   }
 `;
 
+export const GET_GROUP_CHAT = gql`
+  query getMessages($groupId: ID!) {
+  getMessages(groupId: $groupId) {
+    groupChat {
+      content
+      from
+      sentAt
+    }
+  }
+}
+`
 
 export const GET_MESSAGES = gql`
   subscription ($toGroup: ID!) {
