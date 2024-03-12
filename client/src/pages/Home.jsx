@@ -30,10 +30,10 @@ function Home() {
       <div>
           {Auth.loggedIn() ? (
             <>
-              <button onClick={logout}>
+          <div>Hello, {user}!</div>
+          <button onClick={logout}>
                 Logout
               </button>
-          <div>Hello, {user}!</div>
           <button>Create New Group</button>
           </>
           ) : (
