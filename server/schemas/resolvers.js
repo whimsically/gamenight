@@ -174,6 +174,14 @@ const resolvers = {
             return user;
         },
         
+        deleteUserUnavailableDays: async (parent, {userId}) => {
+
+            const user = await User.findByIdAndUpdate(userId, {$unset: { unavailableDays: ''}}, {new:true});
+            if (!user) {
+                throw new Error('User not found');
+            }
+            return user;
+        },
 
         //send message
           sendMessage: async (parent, { from, content, toGroup }) => {
