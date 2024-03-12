@@ -1,9 +1,13 @@
 const {User, Group } = require('../models');
+// const Message = require('../models/Message');
 const {signToken, AuthenticationError} = require('../utils/auth');
 const { PubSub } = require('graphql-subscriptions');
 const { withFilter } = require('graphql-subscriptions');
 
 const pubsub = new PubSub();
+const messages = [];
+const subscribers = [];
+const onMessagesUpdates = (fn) => subscribers.push(fn);
 
 const resolvers = {
     Query: {
@@ -53,15 +57,18 @@ const resolvers = {
             } catch {throw new Error('Could not get groups')};
         },
 
-        getMessages: async (parent, { groupId }) => {
-            try {
-                const messages = await Group.findById(groupId).populate('groupChat');
-                return messages;
-            } catch (err) {
-                console.log(err)
-                throw err
-            }
-        }
+        messages: () => messages,
+        
+
+        // messages: async (parent, { groupId }) => {
+        //     try {
+        //         const messages = await Group.findById(groupId).populate('groupChat');
+        //         return messages.groupChat;
+        //     } catch (err) {
+        //         console.log(err)
+        //         throw err
+        //     }
+        // }
     },
 
 // I wasn't completely sure which of the mutations I created were completely 100% necessary, so I went ahead and added the ones I knew we would need
@@ -196,40 +203,28 @@ const resolvers = {
         },
 
         //send message
-          sendMessage: async (parent, { from, content, toGroup }) => {
-            try {
-                const addMessageToGroup = await Group.findOneAndUpdate(
-                    {_id: toGroup},
-                    { $addToSet: { groupChat: { from: from, content: content } } },
-                    { new: true }
-                    );
-
-            const groupChat = addMessageToGroup.groupChat;
-            const addedMessage = groupChat[groupChat.length-1];
-            pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup, sentAt: addedMessage.sentAt, _id: addedMessage._id } });
-            return addedMessage;
-
-            } catch(err) {
-                console.log(err)
-                throw err
-            }
-          }
-
-    },
+          sendMessage: async (parent, { from, content }) => {
+            const id = messages.length;
+            messages.push({
+              id,
+              from,
+              content,
+            });
+            subscribers.forEach((fn) => fn());
+            return id;
+          },
+        },
 
     Subscription: {
-        newMessage: {
-          subscribe: withFilter(
-            () => pubsub.asyncIterator('NEW_CHAT_MESSAGE'),
-            (payload, variables) => {
-              return (
-                payload.newMessage.toGroup === variables.toGroup
-              );
+        messages: {
+          subscribe: () => {
+                const channel = Math.random().toString(36).slice(2, 15);
+                onMessagesUpdates(() => pubsub.publish(channel, { messages }));
+                setTimeout(() => pubsub.publish(channel, { messages }), 0);
+                return pubsub.asyncIterator(channel, { messages });
+            }
             },
-          ),
         },
-      },
-
-};
+      };
 
 module.exports = resolvers;

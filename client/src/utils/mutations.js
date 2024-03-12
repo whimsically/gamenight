@@ -17,12 +17,8 @@ mutation Mutation($username: String!, $email: String!, $password: String!) {
 `;
 
 export const SEND_MESSAGE = gql`
-  mutation sendMessage($from: String!, $content: String!, $toGroup: ID!) {
-  sendMessage(from: $from, content: $content, toGroup: $toGroup) {
-    from
-    content
-    sentAt
-  }
+mutation sendMessage($from: String!, $content: String!) {
+  sendMessage(from: $from, content: $content)
 }
 `;
 
@@ -39,12 +35,11 @@ export const GET_GROUP_CHAT = gql`
 `
 
 export const GET_MESSAGES = gql`
-  subscription ($toGroup: ID!) {
-    newMessage(toGroup: $toGroup) {
-	    from
-	    content
-      sentAt
-      _id
+subscription messages {
+  messages {
+    id
+    content
+    from
   }
 }
 `
