@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import '../index.css';
+import './Login.css'
 // import { AuthService } from '../utils/auth';
 
 function Profile() {
@@ -91,9 +92,9 @@ function Profile() {
     );
   } else if (!userProfile && creatingProfile) {
     return (
-      <div>
+      <div className='login-form'>
         <h1>Create Profile</h1>
-        <form onSubmit={handleSubmit}>
+        <form className='input-text'onSubmit={handleSubmit}>
           <label>
             Name:
             <input type="text" name="name" value={formData.name} onChange={handleInputChange} />

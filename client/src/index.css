@@ -16,12 +16,7 @@
   --pastel: linear-gradient(to bottom, #efc3e6, #9c89b8);
   --background: var(--sunset); /* Default background */
 }
-/* 
-@media (max-wdith: 800px){
-  .menu-bar{
-    display: none;
-  }
-} */
+
 
 .profile-image {
   width: 150px;
@@ -81,8 +76,8 @@
 } */
 
 .menu-bar {
-  height: 100vh;
-  margin-top: 10rem;
+  height: 86vh;
+  margin-top: 6rem;
   display: flex;
   flex-direction: column;
   gap: 15px;

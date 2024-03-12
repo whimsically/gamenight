@@ -54,7 +54,8 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsed={collapsed}
+        <Sider 
+        collapsed={collapsed}
         collapsible
         trigger={null}
         theme={darkTheme? 'dark' : 'light'} 

@@ -14,32 +14,27 @@ import { Link } from 'react-router-dom';
 const MenuList = ({ darkTheme }) => {
     return (
         <Menu theme={darkTheme ? 'dark' : 'light'} mode="inline" className="menu-bar">
-            <Link to="/">
             <Menu.Item key="home" icon={<HomeOutlined />}>
-                Home
+            <Link to={'/'}>Home</Link>
             </Menu.Item>
-            </Link>
-            <Link to="/schedule">
             <Menu.Item key="schedule" icon={<CalendarOutlined />} >
-                Schedule
+            <Link to={'/schedule'}>Schedule</Link>
             </Menu.Item>
-            </Link>
-            <Link to='/players'>
+            <Menu.Item key="chats" icon={<WechatOutlined/>} >
+            <Link to={'/chats'}>Chats</Link>
+            </Menu.Item>
             <Menu.Item key="players" icon={<UserOutlined />}>
-                Players
+            <Link to={'/players'}>Players</Link>
             </Menu.Item>
-            </Link>
-            <Link to='/profile'>
             <Menu.Item key="profile" icon={<ProfileOutlined/>}>
-                Profile
+            <Link to={'/profile'}>Profile</Link>
             </Menu.Item>
-            </Link>
-            <Link to='/setting'>
             <Menu.Item key="setting" icon={<SettingOutlined />}>
-                Setting
+            <Link to={'/setting'}>Setting</Link>
             </Menu.Item>
-            </Link>
         </Menu>
+
+
         
     )
 }
