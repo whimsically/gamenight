@@ -5,9 +5,6 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/Home.jsx';
-import Groups from './pages/Groups.jsx';
-import Profile from './pages/Profile.jsx';
-import Setting from './pages/Setting.jsx';
 import Scheduler from './pages/Scheduler.jsx';
 import Signup from './pages/Signup.jsx';
 import Login from './pages/Login.jsx';
@@ -25,16 +22,6 @@ const router = createBrowserRouter([
       }, {
         path: '/schedule',
         element: <Scheduler />
-      }, {
-        path: '/groups',
-        element: <Groups />
-      }, {
-        path: '/profile',
-        element: <Profile />
-        
-      }, {
-        path: '/setting',
-        element: <Setting />
       },
       {
         path: '/login',
