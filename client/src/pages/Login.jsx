@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client'; 
 import { LOGIN_USER } from '../utils/mutations'; 
+import './Login.css'
 
 
 const Login = () => {
@@ -46,6 +47,7 @@ const Login = () => {
 
   return (
     <>
+    <div className='login-form'>
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         <Alert dismissible onClose={() => setShowAlert(false)} show={showAlert} variant='danger'>
           Something went wrong with your login credentials!
@@ -53,6 +55,7 @@ const Login = () => {
         <Form.Group className='mb-3'>
           <Form.Label htmlFor='email'>Email</Form.Label>
           <Form.Control
+          className='input-text'
             type='text'
             placeholder='Your email'
             name='email'
@@ -66,6 +69,7 @@ const Login = () => {
         <Form.Group className='mb-3'>
           <Form.Label htmlFor='password'>Password</Form.Label>
           <Form.Control
+          className='input-text'
             type='password'
             placeholder='Your password'
             name='password'
@@ -76,12 +80,14 @@ const Login = () => {
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
         </Form.Group>
         <Button
+          className='login-button'
           disabled={!(userFormData.email && userFormData.password)}
           type='submit'
           variant='success'>
           Submit
         </Button>
       </Form>
+      </div>
     </>
   );
 };
