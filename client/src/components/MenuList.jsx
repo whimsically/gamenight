@@ -23,21 +23,14 @@ const MenuList = ({ darkTheme }) => {
             <Menu.Item key="chats" icon={<WechatOutlined/>} >
             <Link to={'/chats'}>Chats</Link>
             </Menu.Item>
-            </Link>
-            <Link to='/groups'>
-            <Menu.Item key="groups" icon={<UserOutlined />}>
-                Groups
+            <Menu.Item key="Groups" icon={<UserOutlined />}>
+            <Link to={'/groups'}>Groups</Link>
             </Menu.Item>
             <Menu.Item key="profile" icon={<ProfileOutlined/>}>
             <Link to={'/profile'}>Profile</Link>
             </Menu.Item>
             <Menu.Item key="setting" icon={<SettingOutlined />}>
-                Settings
-            </Menu.Item>
-            </Link>
-            <Link to='/chats'>
-            <Menu.Item key='chats' icon={<WechatOutlined />}>
-                Chats
+            <Link to={'/setting'}>Setting</Link>
             </Menu.Item>
         </Menu>
 
