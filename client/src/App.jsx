@@ -15,8 +15,9 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 
 const { Header, Sider, Content } = Layout;
+
 const wsLink = new GraphQLWsLink(createClient({
-  url: 'ws://localhost:3001/graphql',
+  url: 'ws://glacial-stream-96074-464bdf1b26a2.herokuapp.com/graphql',
 }));
 
 
