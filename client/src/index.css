@@ -15,6 +15,7 @@
   --ocean: linear-gradient(to bottom, #48cae4, #0077b6);
   --pastel: linear-gradient(to bottom, #efc3e6, #9c89b8);
   --background: var(--sunset); /* Default background */
+  
 }
 
 
@@ -50,6 +51,7 @@
 
 .sidebar {
   color: #fff;
+  width: 100%;
 
 }
 
@@ -74,6 +76,21 @@
   border-radius: 50%;
   background: rgba(130, 72, 197, 0.88);
 } */
+
+
+
+@media only screen and (max-width: 768px) {
+  .sidebar {
+    flex: 0 0 100;
+    max-width: 100px;
+    min-width: 100px;
+    width: 10px; /* Adjust padding as needed */
+  }
+}
+
+.sidebar {
+  color: #fff;
+}
 
 .menu-bar {
   height: 86vh;
@@ -110,6 +127,14 @@ body {
   animation: gradient 15s ease infinite;
   background-size: 400% 400%;
   background-attachment: fixed;
+}
+
+.chatbox {
+  border: 1px solid gray;
+  overflow-y: scroll;
+  height: 50vh;
+  width: 40vw;
+  margin: auto;
 }
 
 .theme-dropdown {
@@ -177,7 +202,25 @@ body {
   animation: wave 20s -1s reverse infinite;
   opacity: 0.9;
 }
+@media only screen and (max-width: 768px) {
+  .menu-bar {
+    margin-top: 5rem; /* Adjust as needed */
+    height: auto;
+  }
 
+  .toggle-theme-btn {
+    bottom: 50px;
+  }
+
+  .toggle {
+    bottom: 10px;
+  }
+
+  .theme-dropdown {
+    left: -20px;
+    margin: 10px;
+  }
+}
 @keyframes wave {
   2% {
       transform: translateX(1);
@@ -198,5 +241,6 @@ body {
   100% {
       transform: translateX(1);
   }
+  
   
 }

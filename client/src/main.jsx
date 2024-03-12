@@ -5,13 +5,10 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/Home.jsx';
-import Games from './pages/Games.jsx';
-import Players from './pages/Players.jsx';
-import Profile from './pages/Profile.jsx';
-import Setting from './pages/Setting.jsx';
 import Scheduler from './pages/Scheduler.jsx';
 import Signup from './pages/Signup.jsx';
 import Login from './pages/Login.jsx';
+import Chats from './pages/Chats.jsx';
 
 
 const router = createBrowserRouter([
@@ -25,19 +22,6 @@ const router = createBrowserRouter([
       }, {
         path: '/schedule',
         element: <Scheduler />
-      }, {
-        path: '/players',
-        element: <Players />
-      }, {
-        path: '/profile',
-        element: <Profile />
-        
-      }, {
-        path: '/setting',
-        element: <Setting />
-      }, {
-        path: '/games',
-        element: <Games />
       },
       {
         path: '/login',
@@ -47,6 +31,10 @@ const router = createBrowserRouter([
         path: '/signup',
         element: <Signup />
       },
+      {
+        path: '/chats',
+        element: <Chats />
+      }
     ]
   }
 ]);

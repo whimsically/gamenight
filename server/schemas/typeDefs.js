@@ -25,14 +25,13 @@ const typeDefs = `
   }
 
   type Message {
-    _id: ID!
+    id: String!
     from: String!
     content: String!
-    sentAt: String
   }
 
   type Subscription {
-    newMessage(toGroup: ID!): Message!
+    messages: [Message!]
   }
 
   type Query {
@@ -42,7 +41,8 @@ const typeDefs = `
     group(groupId: ID!): Group
     groups: [Group]
     getUserUnavailableDays(userId: ID!): [User!]
-    getMessages(group: ID!): [Message]!
+    messages: [Message!]
+    getUserGroups(username: String!): User
   }
 
   type Mutation {
@@ -59,7 +59,7 @@ const typeDefs = `
     setUserUnavailableDays(username: String!, unavailableDays: [String]!): User
     deleteUserUnavailableDays(userId: ID!): User
 
-    sendMessage(from: String! content: String! toGroup: ID!): Message!
+    sendMessage(from: String! content: String!): ID!
 
   }
    `;

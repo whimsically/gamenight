@@ -1,19 +1,43 @@
 import { useState, useEffect } from 'react';
-import { useSubscription, useMutation } from '@apollo/client';
-import { GET_MESSAGES } from '../utils/mutations';
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../utils/queries';
+import Auth from '../utils/auth';
+import Chatbox from '../components/ChatBox'
 
-// const userGroup
+export default function Chats(){  
 
-export default function Chats(){
-  return (
+  if (!Auth.loggedIn()){
+    return (
+      <>
+      <h1>Chats</h1>
+      <h2>Please log in to view!</h2>
+      </>
+    )
+  } else {
+    const user = Auth.getProfile().data.username;
+    const { loading, data } = useQuery(QUERY_USER, {
+      variables: {
+        username: user
+      }
+    });
+
+  const [chatIdState, setChatIdState] = useState('');
+
+  useEffect(() => {
+      if (data) {
+        const groupChatId = data.getUserGroups.groups[0]._id.toString();
+        console.log(groupChatId);
+        setChatIdState(groupChatId);
+      }
+    }, [loading]);
+
+    return (
       <>
       <h1>Chats</h1>
       <div className='chat'>
-      {/* {Messages} */}
+      {!loading && <Chatbox chatId={chatIdState} user={user}/>}
       </div>
-      <label for='chat-message'>Message:</label>
-      <input type='text' name='chat-message'></input>
-      <input type='submit'></input>
       </>
-  )
+    )
+  }
 };
