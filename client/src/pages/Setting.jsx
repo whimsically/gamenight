@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import { redirect } from 'react-router-dom';
 
 function Settings({ onDeleteProfile }) {
   const [profileDeleted, setProfileDeleted] = useState(false);
+  const navigate = useNavigate(); // Get the navigate function
 
   const handleDeleteProfile = () => {
     // Call onDeleteProfile function to trigger profile deletion
