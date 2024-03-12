@@ -22,16 +22,16 @@ query getUserGroups($username: String!) {
 }
 `
 
-export const GET_GROUP_CHAT = gql`
-query GetMessages($groupId: ID!) {
-  getMessages(groupId: $groupId) {
-    groupName
-    groupChat {
-      content
-      from
-      sentAt
-      _id
-    }
-  }
-}
-`
+// export const GET_GROUP_CHAT = gql`
+// query GetMessages($groupId: ID!) {
+//   getMessages(groupId: $groupId) {
+//     groupName
+//     groupChat {
+//       content
+//       from
+//       sentAt
+//       _id
+//     }
+//   }
+// }
+// `

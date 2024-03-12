@@ -1,23 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useSubscription} from '@apollo/client';
-import { GET_GROUP_CHAT } from '../utils/queries';
+// import { GET_GROUP_CHAT } from '../utils/queries';
 import { SEND_MESSAGE, GET_MESSAGES } from '../utils/mutations';
 
 function Chatbox ({ chatId, user }) {
-    const chatMessages = [];
     const [chatFormState, setChatFormState] = useState({ from: user, content: '' })
     const [sendMessage] = useMutation(SEND_MESSAGE)
 
-    const { data, loading, error } = useQuery(GET_GROUP_CHAT, {
-            variables: {
-                groupId: chatId
-        }});
+    // const { data, loading, error } = useQuery(GET_GROUP_CHAT, {
+    //         variables: {
+    //             groupId: chatId
+    //     }});
 
-    const { data: subData } = useSubscription(GET_MESSAGES, {
-        variables: {
-            toGroup: chatId
-        }
-    })
+    const { data, loading} = useSubscription(GET_MESSAGES)
     
     const handleChange = (event) => {
             const { name, value } = event.target;
@@ -45,14 +40,13 @@ function Chatbox ({ chatId, user }) {
     }
 
     if (!loading) {
-        const groupName = data.getMessages.groupName;
-        const groupChat = data.getMessages.groupChat;
+        console.log(data);
+        const groupChat = data.messages;
         return (
         <>
-        <h2>{groupName} </h2>
         <div className='chatbox' id='chatbox'>
         {groupChat.map((message) => (
-            <div className='chatMessage' key={message._id}>{message.from}: {message.content}</div>
+            <div className='chatMessage' key={message.id}>{message.from}: {message.content}</div>
         ))}
         
         </div>

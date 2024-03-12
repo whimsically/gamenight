@@ -129,6 +129,14 @@ body {
   background-attachment: fixed;
 }
 
+.chatbox {
+  border: 1px solid gray;
+  overflow-y: scroll;
+  height: 50vh;
+  width: 40vw;
+  margin: auto;
+}
+
 .theme-dropdown {
     position: relative;
     left: -720px;

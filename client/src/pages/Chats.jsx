@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
-import { QUERY_USER, GET_GROUP_CHAT } from '../utils/queries';
+import { QUERY_USER } from '../utils/queries';
 import Auth from '../utils/auth';
 import Chatbox from '../components/ChatBox'
 
