@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; 
 
 function Settings({ onDeleteProfile }) {
   const [profileDeleted, setProfileDeleted] = useState(false);
-  const navigate = useNavigate(); // Get the navigate function
+  const navigate = useNavigate(); 
 
   const handleDeleteProfile = () => {
-    // Call onDeleteProfile function to trigger profile deletion
     onDeleteProfile();
-    // Set profileDeleted to true to trigger the redirect
     setProfileDeleted(true);
   };
 
   if (profileDeleted) {
-    // Redirect to the homepage if the profile is deleted
-    return redirect("/");
+    navigate("/"); 
+    return null; 
   }
 
   return (
