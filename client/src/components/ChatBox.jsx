@@ -30,7 +30,6 @@ function Chatbox ({ chatId, user }) {
                 variables: {
                     from: chatFormState.from,
                     content: chatFormState.content,
-                    toGroup: chatId
                 }
             });
         console.log(submitChat)
