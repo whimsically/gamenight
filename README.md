@@ -24,8 +24,10 @@ Note: This project is deployed for everyday use [here]. Otherwise, you can follo
 
 This project is deployed via Heroku and can be found [here]. To use the project, create an account. After that, join or create a group to access a group calendar. Once in a group, block off days that you are unavailable so other users can add what times work for them or what doesn't.
 
-## Application Link
-# https://glacial-stream-96074-464bdf1b26a2.herokuapp.com/ 
+## Application
+ https://glacial-stream-96074-464bdf1b26a2.herokuapp.com/ 
+
+ 
 ![app screenshot](gamenight-gif.gif)
 
 ## License
