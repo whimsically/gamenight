@@ -16,7 +16,6 @@ import {
 import { tokens } from "./theme.js";
 
 const Scheduler = () => {
-  const theme = useTheme();
   const colors = tokens('dark');
   const [currentEvents, setCurrentEvents] = useState([]);
 
@@ -33,8 +32,9 @@ const Scheduler = () => {
         end: selected.endStr,
         allDay: selected.allDay,
         // Assume availability status is stored in the 'available' property
-        available: true, // Change this based on your availability logic
+        available: true, 
       });
+
     }
   };
 
@@ -47,14 +47,6 @@ const Scheduler = () => {
       selected.event.remove();
     }
   };
-
-  // Function to determine background color based on availability
-  // const getEventBackgroundColor = (event) => {
-  //   console.log (event.extendedProps)
-  //   return event.extendedProps.available
-  //     ? colors.greenAccent["500"] // Available color
-  //     : colors.red["500"]; // Not available color
-  // };
 
   return (
     <>
@@ -72,7 +64,7 @@ const Scheduler = () => {
                 <ListItem
                   key={event.id}
                   sx={{
-                    // backgroundColor: getEventBackgroundColor(event),
+                    backgroundColor: event.extendedProps.available ? colors.greenAccent[500] : colors.redAccent[500], // Change the color based on availability
                     margin: "10px 0",
                     borderRadius: "2px",
                   }}
@@ -121,13 +113,13 @@ const Scheduler = () => {
                 {
                   id: "12315",
                   title: "All-day event",
-                  date: "2022-09-14",
+                  date: "2023-09-14",
                   available: true,
                 },
                 {
                   id: "5123",
                   title: "Timed event",
-                  date: "2022-09-28",
+                  date: "2024-09-28",
                   available: false,
                 },
               ]}
