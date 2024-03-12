@@ -24,12 +24,15 @@ export default function Chats(){
   const [chatIdState, setChatIdState] = useState('');
 
   useEffect(() => {
-      if (data) {
-        const groupChatId = data.getUserGroups.groups[0]._id.toString();
-        console.log(groupChatId);
-        setChatIdState(groupChatId);
-      }
-    }, [loading]);
+    if (data && data.getUserGroups && data.getUserGroups.groups && data.getUserGroups.groups.length > 0) {
+      const groupChatId = data.getUserGroups.groups[0]._id.toString();
+      console.log(groupChatId);
+      setChatIdState(groupChatId);
+    } else {
+      
+      console.log('Data is not ready or no groups available');
+    }
+  }, [data]);
 
     return (
       <>
