@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER_PROFILE } from '../utils/queries';
 import Auth from '../utils/auth';
@@ -10,11 +10,19 @@ const logout = (event) => {
 };
 
 function Home() {
-  const user = Auth.getProfile().data.username;
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    if (Auth.loggedIn()) {
+      const profile = Auth.getProfile();
+      setUser(profile?.data?.username);
+    }
+  }, []);
+
   const { loading, data: userData } = useQuery(QUERY_USER_PROFILE, {
-    variables: {
-      username: user
-    }});
+    variables: { username: user },
+    skip: !user,
+  });
 
     return (
     <>
