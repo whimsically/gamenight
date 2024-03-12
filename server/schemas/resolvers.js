@@ -1,7 +1,6 @@
 const {User, Group } = require('../models');
 const {signToken, AuthenticationError} = require('../utils/auth');
 const { PubSub } = require('graphql-subscriptions');
-const { ObjectId } = require('mongoose').Types;
 const { withFilter } = require('graphql-subscriptions');
 
 const pubsub = new PubSub();
@@ -207,7 +206,7 @@ const resolvers = {
 
             const groupChat = addMessageToGroup.groupChat;
             const addedMessage = groupChat[groupChat.length-1];
-            pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup, sentAt: addedMessage.sentAt } });
+            pubsub.publish("NEW_CHAT_MESSAGE", { newMessage: { from, content, toGroup, sentAt: addedMessage.sentAt, _id: addedMessage._id } });
             return addedMessage;
 
             } catch(err) {

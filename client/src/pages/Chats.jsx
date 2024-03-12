@@ -35,7 +35,7 @@ export default function Chats(){
       <>
       <h1>Chats</h1>
       <div className='chat'>
-      {!loading && <Chatbox chatId={chatIdState}/>}
+      {!loading && <Chatbox chatId={chatIdState} user={user}/>}
       </div>
       </>
     )

@@ -16,17 +16,14 @@ mutation Mutation($username: String!, $email: String!, $password: String!) {
 }
 `;
 
-export const POST_MESSAGE = gql`
-  mutation($from: String!, $content: String!, $toGroup: ID!) {
-    sendMessage(from: $from, content: $content, toGroup: $toGroup)
-    {
-      message {
-        from
-        content
-        sentAt
-      }
-    }
+export const SEND_MESSAGE = gql`
+  mutation sendMessage($from: String!, $content: String!, $toGroup: ID!) {
+  sendMessage(from: $from, content: $content, toGroup: $toGroup) {
+    from
+    content
+    sentAt
   }
+}
 `;
 
 export const GET_GROUP_CHAT = gql`
@@ -43,10 +40,11 @@ export const GET_GROUP_CHAT = gql`
 
 export const GET_MESSAGES = gql`
   subscription ($toGroup: ID!) {
-    newMessage(toGroup: $group) {
+    newMessage(toGroup: $toGroup) {
 	    from
 	    content
       sentAt
+      _id
   }
 }
 `
