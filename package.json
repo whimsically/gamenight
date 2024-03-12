@@ -19,7 +19,6 @@
         "@graphql-tools/schema": "^10.0.3",
         "graphql-subscriptions": "^2.0.0",
         "graphql-ws": "^5.15.0",
-        "vite": "^5.1.6",
         "ws": "^8.16.0"
     }
 }
