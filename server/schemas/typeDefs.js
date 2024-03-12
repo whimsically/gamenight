@@ -6,6 +6,8 @@ const typeDefs = `
     password: String
     profilePic: String
     unavailableDays: [String]
+    groups: [Group]
+    pendingInvites: [Group]
   }
 
   type Group {
@@ -30,7 +32,7 @@ const typeDefs = `
   }
 
   type Subscription {
-    newMessage(group: ID!): [Message!]
+    newMessage(toGroup: ID!): Message!
   }
 
   type Query {

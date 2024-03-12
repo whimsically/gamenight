@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { redirect } from 'react-router-dom';
 
 function Settings({ onDeleteProfile }) {
   const [profileDeleted, setProfileDeleted] = useState(false);
@@ -13,7 +13,7 @@ function Settings({ onDeleteProfile }) {
 
   if (profileDeleted) {
     // Redirect to the homepage if the profile is deleted
-    return <Redirect to="/" />;
+    return redirect("/");
   }
 
   return (
