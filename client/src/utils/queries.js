@@ -13,3 +13,16 @@ export const QUERY_ME = gql`
         }
 }
 `
+
+export const GET_GROUP_CHAT = gql`
+    query getGroupChat {
+        group($groupId) {
+            groupName
+            groupChat{
+                from
+                content
+                sentAt
+            }
+        }
+    }
+`

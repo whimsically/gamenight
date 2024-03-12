@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const messageSchema = require('./Message');
+const Message = require('./Message');
 
 const { Schema } = mongoose;
 
@@ -20,7 +20,7 @@ const groupSchema = new Schema({
     groupPicture: {
         type: String
     },
-    groupChat: [messageSchema]
+    groupChat: [Message.schema]
 });
 
 const Group = mongoose.model('Group', groupSchema);

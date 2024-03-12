@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import { redirect } from 'react-router-dom';
 
 function Settings({ onDeleteProfile }) {
   const [profileDeleted, setProfileDeleted] = useState(false);
-  const navigate = useNavigate(); 
 
   const handleDeleteProfile = () => {
     onDeleteProfile();
@@ -11,8 +10,7 @@ function Settings({ onDeleteProfile }) {
   };
 
   if (profileDeleted) {
-    navigate("/"); 
-    return null; 
+    return redirect("/");
   }
 
   return (
