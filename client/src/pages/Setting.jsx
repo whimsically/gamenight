@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
-import { redirect } from 'react-router-dom';
+import { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_USER_PROFILE } from '../utils/queries';
+import Auth from '../utils/auth';
 
-function Settings({ onDeleteProfile }) {
-  const [profileDeleted, setProfileDeleted] = useState(false);
+function Settings() {
+  if (!Auth.loggedIn()){
+    return (
+      <>Please log in to view!</>
+    )
+  } else {
+    // const [settingFormState, setSettingFormState] = useState();
+    const user = Auth.getProfile().data.username;
+    const { loading, data: userData } = useQuery(QUERY_USER_PROFILE, {
+      variables: {
+        username: user
+      }
+    });
+    
 
-  const handleDeleteProfile = () => {
-    onDeleteProfile();
-    setProfileDeleted(true);
-  };
+    // const handleChange = (event) => {
+    //   const { name, value } = event.target;
+    //   setSettingFormState({
+    //     ...settingFormState,
+    //     [name]: value,
+    //   });
+    // };
 
-  if (profileDeleted) {
-    return redirect("/");
+
+
+    if (!loading) {
+      console.log(userData)
+      return(
+        <>
+        <h1>Settings</h1>
+        <br />
+        {/* <button onClick={() => {}}>Create New Group</button> */}
+        </>
+      )
+    }
   }
-
-  return (
-    <div>
-      <h1>Settings</h1>
-      <p>This is where you can manage your profile settings.</p>
-      <button onClick={handleDeleteProfile}>Delete Profile</button>
-    </div>
-  );
 }
-
 export default Settings;

@@ -5,8 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Home from './pages/Home.jsx';
-import Games from './pages/Games.jsx';
-import Players from './pages/Players.jsx';
+import Groups from './pages/Groups.jsx';
 import Profile from './pages/Profile.jsx';
 import Setting from './pages/Setting.jsx';
 import Scheduler from './pages/Scheduler.jsx';
@@ -27,8 +26,8 @@ const router = createBrowserRouter([
         path: '/schedule',
         element: <Scheduler />
       }, {
-        path: '/players',
-        element: <Players />
+        path: '/groups',
+        element: <Groups />
       }, {
         path: '/profile',
         element: <Profile />
@@ -36,9 +35,6 @@ const router = createBrowserRouter([
       }, {
         path: '/setting',
         element: <Setting />
-      }, {
-        path: '/games',
-        element: <Games />
       },
       {
         path: '/login',

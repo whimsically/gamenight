@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client';
 
+export const QUERY_USER_PROFILE = gql`
+  query getUser($username: String!){
+    user(username: $username) {
+      profilePic
+      unavailableDays
+      groups
+      pendingInvites
+    }
+  }
+`
 
 export const QUERY_USER = gql`
 query getUserGroups($username: String!) {

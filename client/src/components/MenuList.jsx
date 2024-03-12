@@ -24,9 +24,9 @@ const MenuList = ({ darkTheme }) => {
                 Schedule
             </Menu.Item>
             </Link>
-            <Link to='/players'>
-            <Menu.Item key="players" icon={<UserOutlined />}>
-                Players
+            <Link to='/groups'>
+            <Menu.Item key="groups" icon={<UserOutlined />}>
+                Groups
             </Menu.Item>
             </Link>
             <Link to='/profile'>
@@ -36,7 +36,12 @@ const MenuList = ({ darkTheme }) => {
             </Link>
             <Link to='/setting'>
             <Menu.Item key="setting" icon={<SettingOutlined />}>
-                Setting
+                Settings
+            </Menu.Item>
+            </Link>
+            <Link to='/chats'>
+            <Menu.Item key='chats' icon={<WechatOutlined />}>
+                Chats
             </Menu.Item>
             </Link>
         </Menu>
