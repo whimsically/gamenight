@@ -1,3 +1,7 @@
+//add button to create group
+//render pending invites and be able to accept
+//profile pic if time
+
 import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { QUERY_USER_PROFILE } from '../utils/queries';
