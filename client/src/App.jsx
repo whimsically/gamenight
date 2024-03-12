@@ -88,7 +88,7 @@ function App() {
         collapsible
         trigger={null}
         theme={darkTheme? 'dark' : 'light'} 
-        width={150} 
+        width={300} 
         className="sidebar"
         >
         <Button
