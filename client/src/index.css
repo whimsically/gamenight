@@ -5,7 +5,8 @@
   padding: 2rem;
   text-align: center;
   font-family: "Kode Mono", monospace;
-  width: 100%;
+  width: 80vw;
+  height: 100%;
   --sunset: linear-gradient(to bottom, #f4a261, #e76f51);
   --dark: linear-gradient(to bottom, #1b263b, #0d1b2a);
   --light: linear-gradient(to bottom, #fffcf2, #ccc5b9);
